@@ -1,0 +1,96 @@
+<%-include("../partials/header")-%>
+<body class="flex">
+    <%-include("../partials/sidebar")-%>
+    <div class="py-5 flex-auto">
+        <div class="flex justify-between">
+            <h1 class="text-2xl font-roboto ml-3 font-bold">Excercise</h1>
+            <div class="px-8 cursor-pointer"><%=username %></div>
+        </div>
+        <div class="mt-5 ml-3">
+            <div class="text-slate-950 text-2xl font-semibold w-5/6 h-3/4 m-auto mt-10">
+                Weekly Streak
+            </div>
+            <div class="w-5/6 h-3/4 m-auto mt-5 grid grid-cols-7">
+                <div class="w-10 h-10 rounded-full border-yellow-400 border-4 flex justify-center items-center">19</div>
+                <div class="w-10 h-10 rounded-full border-yellow-400 border-4 flex justify-center items-center">20</div>
+                <div class="w-10 h-10 rounded-full border-gray-400 border-4 flex justify-center items-center">21</div>
+                <div class="w-10 h-10 rounded-full border-gray-400 border-4 flex justify-center items-center">22</div>
+                <div class="w-10 h-10 rounded-full border-gray-400 border-4 flex justify-center items-center">23</div>
+                <div class="w-10 h-10 rounded-full border-gray-400 border-4 flex justify-center items-center">24</div>
+                <div class="w-10 h-10 rounded-full border-gray-400 border-4 flex justify-center items-center">25</div>
+            </div>
+            <div class="text-slate-950 text-2xl font-semibold w-5/6 h-3/4 m-auto mt-10">
+                Today's Excercise Plan
+            </div>
+            <div class="w-5/6 m-auto h-3/4">
+                <div class="w-1/4 mt-5 h-40 border grid rounded-md">
+                    <div class="bg-red-500 row-span-6 flex items-center justify-center font-bold text-white text-2xl">
+                        Beginner's Excercise
+                    </div>
+                    <div class=" bg-blue-500 row-span-2 font-bold text-white flex items-center justify-center cursor-pointer hover:bg-blue-700">
+                        Start Now
+                    </div>
+                </div>
+            </div>
+            <div class="text-slate-950 text-2xl font-semibold w-5/6 h-3/4 m-auto mt-10">
+                Daily Challenges
+            </div>
+            <div class="w-5/6 m-auto h-3/4 flex gap-5">
+                <div class="w-1/4 mt-5 h-40 border grid rounded-md">
+                    <div class="bg-gradient-to-r from-orange-600 to-red-500 row-span-6 flex items-center justify-center font-bold text-white text-2xl">
+                        Plank Challenge
+                    </div>
+                    <div class=" bg-blue-500 row-span-2 font-bold text-white flex items-center justify-center cursor-pointer hover:bg-blue-700">
+                        Start Now
+                    </div>
+                </div>
+                <div class="w-1/4 mt-5 h-40 border grid rounded-md">
+                    <div class="bg-gradient-to-r from-orange-600 to-red-500 row-span-6 flex items-center justify-center font-bold text-white text-2xl">
+                        Push up Challenge
+                    </div>
+                    <div class=" bg-blue-500 row-span-2 font-bold text-white flex items-center justify-center cursor-pointer hover:bg-blue-700">
+                        Start Now
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    let loginChart = document.getElementById("loginGraph").getContext('2d');
+    
+    let chart = new Chart(loginChart, {
+        type: "line",
+        data : {
+			labels : [ "Feb 14", "Feb 15", "Feb 16", "Feb 17", "Feb 18", "Feb 19",
+					"Feb 20"],
+			datasets : [
+					{
+						data : [ 1400, 2000, 1500, 2013, 1200,
+								1700, 1800, 0 ],
+						label : "Calories Consumed",
+						borderColor : "#ED2939",
+						fill : false
+					},
+                    {
+						data : [ 1200, 2300, 1400, 1300, 1700,
+								1400, 2000, 0 ],
+						label : "Calories Burned",
+						borderColor : "#3cba9f",
+						fill : false
+					}
+                ]
+		},
+		options : {
+			title : {
+				display : true,
+				text : 'Chart JS Line Chart Example'
+			},
+            beziercurve: false,
+            responsive: true,
+          aspectRatio: 1,
+          maintainAspectRatio: false
+		}
+    })
+</script>

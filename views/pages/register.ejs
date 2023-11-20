@@ -14,23 +14,18 @@
                     <form class="space-y-4 md:space-y-6" action="#">
                         <div>
                             <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
-                            <input type="text" name="username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="">
-                            <p class="text-red-600 pt-1 text-sm font-semibold">This is for displaying error</p>
+                            <input type="text" name="username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John" required>
+                            <p class="text-red-600 pt-1 text-sm font-semibold username error"></p>
                         </div>
                         <div>
                             <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                            <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="">
-                            <p class="text-red-600 pt-1 text-sm font-semibold">This is for displaying error</p>
+                            <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required>
+                            <p class="text-red-600 pt-1 text-sm font-semibold email error"></p>
                         </div>
                         <div>
                             <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                            <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
-                            <p class="text-red-600 pt-1 text-sm font-semibold">This is for displaying error</p>
-                        </div>
-                        <div>
-                            <label for="confirm-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm password</label>
-                            <input type="password" name="confirm-password" id="confirm-password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
-                            <p class="text-red-600 pt-1 text-sm font-semibold">This is for displaying error</p>
+                            <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                            <p class="text-red-600 pt-1 text-sm font-semibold password error"></p>
                         </div>
                         <div class="flex items-start">
                             <div class="flex items-center h-5">
@@ -51,5 +46,45 @@
       </section>
 </body>
 <script>
+    const form = document.querySelector("form")
+    const emailError = document.querySelector(".email.error")
+    const passwordError = document.querySelector(".password.error")
+    const usernameError = document.querySelector(".username.error")
 
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        emailError.textContent = ""
+        usernameError.textContent = ""
+        passwordError.textContent = ""
+
+        const username = form.username.value
+        const email = form.email.value
+        const password = form.password.value
+
+        try {
+            const res = await fetch('/register', {
+                method: "POST",
+                body: JSON.stringify({
+                    username, email, password
+                }),
+                headers: { 'Content-Type': 'application/json' }
+            })
+
+            const data = await res.json();
+            console.log(data)
+
+            if(res.ok) {
+                
+            }else{
+                console.log("error")
+                emailError.textContent = data.email
+                usernameError.textContent = data.username
+                password.textContent = data.password
+            }
+
+        }catch(e) {
+            console.log(e)
+        }
+    })
 </script>

@@ -1,0 +1,101 @@
+<%-include("../partials/header")-%>
+<body class="flex">
+    <%-include("../partials/sidebar")-%>
+    <div class="py-5 flex-auto">
+        <div class="flex justify-between">
+            <h1 class="text-2xl font-roboto ml-3 font-bold">Your Dashboard</h1>
+            <div class="px-5 cursor-pointer"><%=username %></div>
+        </div>
+        <div class="mt-5 ml-3">
+            <div class="text-slate-950 text-2xl font-semibold w-5/6 h-3/4 m-auto mt-10">
+                Weekly Streak
+            </div>
+            <div class="w-5/6 h-3/4 m-auto mt-5 grid grid-cols-7">
+                <div class="w-10 h-10 rounded-full border-yellow-400 border-4 flex justify-center items-center">19</div>
+                <div class="w-10 h-10 rounded-full border-yellow-400 border-4 flex justify-center items-center">20</div>
+                <div class="w-10 h-10 rounded-full border-gray-400 border-4 flex justify-center items-center">21</div>
+                <div class="w-10 h-10 rounded-full border-gray-400 border-4 flex justify-center items-center">22</div>
+                <div class="w-10 h-10 rounded-full border-gray-400 border-4 flex justify-center items-center">23</div>
+                <div class="w-10 h-10 rounded-full border-gray-400 border-4 flex justify-center items-center">24</div>
+                <div class="w-10 h-10 rounded-full border-gray-400 border-4 flex justify-center items-center">25</div>
+            </div>
+            <div class="text-slate-950 text-2xl font-semibold w-5/6 h-3/4 m-auto mt-10">
+                Calories Chart
+            </div>
+            <div class="w-5/6 m-auto h-3/4">
+                <canvas id="loginGraph"></canvas>
+            </div>
+            <div class="text-slate-950 text-2xl font-semibold w-5/6 h-3/4 m-auto mt-10">
+                Daily Status
+            </div>
+            <div class= "text-gray-100 grid grid-cols-2 md:grid-cols-4 sm:grid-cols-3 w-5/6 mx-auto h-3/4 mt-10 pb-10 gap-5 text-sm font-semibold">
+                <div class="border rounded-md p-5 bg-blue-600">
+                    <div class="flex flex-col shadow-sm gap-3 items-center">
+                        <img src="../../public/images/water.png">
+                        <p>Water Consumed: 3.5 &#8467;</p>
+                        <p>Goal: 4 &#8467;</p>
+                    </div>
+                </div>
+                <div class="border rounded-md shadow-sm p-5 bg-orange-500">
+                    <div class="flex flex-col gap-3 items-center">
+                        <img src="../../public/images/burger.png">
+                        <p>Calories Consumed: 1700 cal</p>
+                        <p>Limit: 2000 cal</p>
+                    </div>
+                </div>
+                <div class="border rounded-md shadow-sm p-5 bg-green-600">
+                    <div class="flex flex-col gap-3 items-center">
+                        <img src="../../public/images/water.png">
+                        <p>Calories Burned: 1800 cal</p>
+                        <p>Goal: 2000 cal</p>
+                    </div>
+                </div>
+                <div class="border rounded-md shadow-sm p-5 bg-gray-600">
+                    <div class="flex flex-col gap-3 items-center">
+                        <img src="../../public/images/water.png">
+                        <p>Sleep: 7.5 hrs</p>
+                        <p>Goal: 8 hrs</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    let loginChart = document.getElementById("loginGraph").getContext('2d');
+    
+    let chart = new Chart(loginChart, {
+        type: "line",
+        data : {
+			labels : [ "Feb 14", "Feb 15", "Feb 16", "Feb 17", "Feb 18", "Feb 19",
+					"Feb 20"],
+			datasets : [
+					{
+						data : [ 1400, 2000, 1500, 2013, 1200,
+								1700, 1800, 0 ],
+						label : "Calories Consumed",
+						borderColor : "#ED2939",
+						fill : false
+					},
+                    {
+						data : [ 1200, 2300, 1400, 1300, 1700,
+								1400, 2000, 0 ],
+						label : "Calories Burned",
+						borderColor : "#3cba9f",
+						fill : false
+					}
+                ]
+		},
+		options : {
+			title : {
+				display : true,
+				text : 'Chart JS Line Chart Example'
+			},
+            beziercurve: false,
+            responsive: true,
+          aspectRatio: 1,
+          maintainAspectRatio: false
+		}
+    })
+</script>
