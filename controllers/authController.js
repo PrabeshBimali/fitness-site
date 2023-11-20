@@ -17,8 +17,8 @@ export async function register_post(req, res) {
 
         const {userid, username} = await users.create(req)
         const token = createToken(userid)
-        res.cookie("jwt", token, {httpOnly: true, maxAge: maxAge * 1000})
-        res.cookie("username", username, {httpOnly: true, maxAge: maxAge * 1000})
+        res.cookie("jwt", token, {maxAge: maxAge * 1000})
+        res.cookie("username", username, {maxAge: maxAge * 1000})
         return res.status(200).json(userid)
 
     }catch (e) {
@@ -52,8 +52,8 @@ export async function login_post(req, res) {
 
             if(auth) {
                 const token = createToken(user.userid)
-                res.cookie("jwt", token, {httpOnly: true, maxAge: maxAge * 1000})
-                res.cookie("username", user.username, {httpOnly: true, maxAge: maxAge * 1000})
+                res.cookie("jwt", token, {maxAge: maxAge * 1000})
+                res.cookie("username", user.username, {maxAge: maxAge * 1000})
                 return res.status(200).json(user.userid)
             }
             else {
