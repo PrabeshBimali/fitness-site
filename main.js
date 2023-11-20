@@ -1,4 +1,5 @@
 import express from "express"
+import db from "./config/db.js"
 const app = express()
 import dotenv from "dotenv"
 import cookieParser from "cookie-parser"
@@ -36,6 +37,12 @@ app.get("/login", (req, res) => {
 app.post("/login", validateLogin, login_post)
 
 app.get("/logout", logout_get)
+
+app.get("/test", async (req, res) => {
+  const data = await db.query("SELECT * FROM pg_catalog.pg_tables")
+  console.log(data)
+  return
+})
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
