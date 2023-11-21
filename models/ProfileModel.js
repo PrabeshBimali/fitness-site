@@ -26,3 +26,15 @@ export async function create(req) {
 
     return answer
 }
+
+export async function update(req) {
+    const { age, height, inches, weight, gender, calorieLimit, calorieBurnGoal, waterGoal, sleepGoal, sleepTime } = req.body;
+    const userid = req.userid;
+
+    const query = `Update profile set age=$1, foot=$3, inches=$4, weight=$5, gender=$6, 
+                    calorielimit=$7, calorieburngoal=$8, waterintakegoal=$9, sleepgoal=$10, sleeptime=$11 where userid=$2`
+
+    await db.query(query, [age, userid, height, inches, weight, gender, calorieLimit, calorieBurnGoal, waterGoal, sleepGoal, sleepTime])
+
+    return 1
+}

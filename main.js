@@ -5,7 +5,7 @@ import cookieParser from "cookie-parser"
 import { validateLogin, validateRegister, verifyAuth } from "./middlewares/authMiddleware.js"
 import { login_post, logout_get, register_post } from "./controllers/authController.js"
 import { getUsername, passProfileData, validateProfile, verifyProfileCreated, verifyProfileNotCreated } from "./middlewares/profileMiddleware.js"
-import { profile_post } from "./controllers/profileController.js"
+import { profile_post, profile_put } from "./controllers/profileController.js"
 import { allExcercisesTransfer, excerciseDetailTransfer } from "./middlewares/excerciseMiddleware.js"
 dotenv.config()
 const port = process.env.PORT
@@ -36,7 +36,13 @@ app.get("/profile/create", verifyAuth, verifyProfileNotCreated, (req, res) => {
   return res.render('pages/createProfile')
 })
 
+app.get("/profile/update", verifyAuth, verifyProfileCreated, passProfileData, (req, res) => {
+  return res.render('pages/updateProfile', {profile: req.profile})
+})
+
 app.post("/profile", verifyAuth, verifyProfileNotCreated, validateProfile, profile_post)
+
+app.put("/profile", verifyAuth, verifyProfileCreated, validateProfile, profile_put)
 
 app.get("/profile", verifyAuth, verifyProfileCreated, getUsername, passProfileData, (req, res) => {
   return res.render('pages/profile', {username: req.user.username, profile: req.profile});

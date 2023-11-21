@@ -83,7 +83,7 @@
                               <label for="terms" class="font-light text-gray-700 dark:text-gray-300">Optional fields can be filled later</label>
                             </div>
                         </div>
-                        <button type="submit" class="w-full text-white bg-yellow-600 hover:bg-yellow-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-3 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Create Your Profile</button>
+                        <button type="submit" class="w-full text-white bg-yellow-600 hover:bg-yellow-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-3 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Update Your Profile</button>
                     </form>
                 </div>
             </div>
@@ -92,6 +92,20 @@
 </body>
 <script>
     const form = document.querySelector("form")
+
+    window.onload = function loadInitialValues(){
+        form.age.value = "<%=profile.age %>"
+        form.height.value = "<%=profile.foot %>"
+        form.inches.value = "<%= profile.inches%>"
+        form.weight.value = "<%=profile.weight %>"
+        form.gender.value = "<%=profile.gender%>"
+        form.calorieLimit.value = "<%=profile.calorielimit%>"
+        form.calorieBurnGoal.value = "<%= profile.calorieburngoal %>"
+        form.waterGoal.value = "<%= profile.waterintakegoal%>"
+        form.sleepGoal.value = "<%= profile.sleepgoal %>"
+        form.sleepTime.value = "<%= profile.sleeptime%>"
+    }
+
     //const emailError = document.querySelector(".email.error")
 
     form.addEventListener("submit", async (e) => {
@@ -99,6 +113,7 @@
 
         //emailError.textContent = ""
 
+        
         const age = form.age.value
         const height = form.height.value
         const inches = form.inches.value
@@ -110,10 +125,9 @@
         const sleepGoal = form.sleepGoal.value
         const sleepTime = form.sleepTime.value
 
-        console.log(age, height, inches, weight, gender, calorieLimit, calorieBurnGoal, waterGoal, sleepGoal, sleepTime)
         try {
             const res = await fetch('/profile', {
-                method: "POST",
+                method: "PUT",
                 body: JSON.stringify({
                     age, height, inches, weight, gender, calorieLimit, calorieBurnGoal, waterGoal, sleepGoal, sleepTime
                 }),
@@ -124,7 +138,7 @@
             console.log(data)
 
             if(res.ok) {
-                location.assign("/")
+                location.assign("/profile")
             }else{
                 console.log("error")
                 //emailError.textContent = data.email
