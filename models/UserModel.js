@@ -41,7 +41,7 @@ export const findUserById = async function(id) {
 }
 
 export const setProfileGeneratedToTrue = async function(id) {
-    const query = `Update users set profilegenerated = true`
+    const query = `Update users set profilegenerated = true where userid=$1`
 
-    await db.query(query)
+    await db.query(query, [id])
 }

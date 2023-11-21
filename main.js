@@ -28,8 +28,8 @@ app.get("/excercise/start", verifyAuth, verifyProfileCreated, getUsername, allEx
   return res.render("pages/todayexcercises", {username: req.user.username, excercises: req.excercises});
 })
 
-app.get("/excercise/:exid", verifyAuth, verifyProfileCreated, getUsername, excerciseDetailTransfer, (req, res) => {
-  return res.render('pages/excerciseinstruction', {username: req.user.username, excercise: req.excercise});
+app.get("/excercise/:exid", verifyAuth, verifyProfileCreated, getUsername, excerciseDetailTransfer, passProfileData, (req, res) => {
+  return res.render('pages/excerciseinstruction', {username: req.user.username, excercise: req.excercise, profile: req.profile});
 })
 
 app.get("/profile/create", verifyAuth, verifyProfileNotCreated, (req, res) => {
@@ -55,11 +55,6 @@ app.get("/login", (req, res) => {
 app.post("/login", validateLogin, login_post)
 
 app.get("/logout", logout_get)
-// app.get("/test", async (req, res) => {
-//   const data = await db.query("SELECT * FROM pg_catalog.pg_tables")
-//   console.log(data)
-//   return
-// })
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

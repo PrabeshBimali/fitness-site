@@ -21,7 +21,7 @@
                 <div class="text-center text-2xl font-extrabold py-2 bg-blue-700 w-1/5 text-white" id="time">00:00</div>
                 <button id="startBtn" class="py-3 bg-green-600 w-1/5 text-2xl font-extrabold text-white">Start</button>
                 <button id="stopBtn" class="hide py-3 bg-red-600 w-1/5 text-2xl font-extrabold text-white">Stop</button>
-                <p id="finalMsg" class="hide text-xl">Total calorie burnt: <span></span>. Progress Saved!</p>
+                <p id="finalMsg" class="hide text-xl">Total calorie burnt: <span id="calorieText"></span>. Progress Saved!</p>
                 <p id="goBack" class="hide mb-5"><a class="text-blue-500" href="/excercise/start">go back</a></p>
             </div>
         </div>
@@ -40,11 +40,20 @@
     const stopBtn = document.getElementById("stopBtn")
     const finalMsg = document.getElementById("finalMsg")
     const goBack = document.getElementById("goBack")
+    const calorieText = document.getElementById("calorieText")
 
     var initialTime;
     var min;
     var sec;
     var interval;
+
+    function calculateCaloriesBurnt() {
+        const weight = parseInt("<%= profile.weight %>")
+        const met = parseFloat("<%= excercise.met %>")
+        const minute = min + (sec/60)
+        const answer = 3.5 * met * (weight/200) * minute
+        return answer.toFixed(2)
+    }
 
     startBtn.addEventListener("click", (e) => {
         e.preventDefault();
@@ -56,13 +65,17 @@
     })
 
     stopBtn.addEventListener("click", async (e) => {
+        
         e.preventDefault();
         clearInterval(interval)
+        stopBtn.remove()
+        calorieText.innerText = calculateCaloriesBurnt()
+        finalMsg.classList.remove("hide")
+        goBack.classList.remove("hide")
 
         try{
 
-            finalMsg.classList.remove("hide")
-            goBack.classList.remove("hide")
+            
 
         }catch(e) {
 

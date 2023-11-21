@@ -98,6 +98,6 @@ export async function passProfileData(req, res, next) {
 
     }catch(e) {
         console.log(e.message)
-        res.status(500).server("Server error")
+        res.status(500).json("Server error")
     }
 }
