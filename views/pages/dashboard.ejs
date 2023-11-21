@@ -8,16 +8,16 @@
         </div>
         <div class="mt-5 ml-3">
             <div class="text-slate-950 text-2xl font-semibold w-5/6 h-3/4 m-auto mt-10">
-                Weekly Streak
+                Weekly Login Streak
             </div>
             <div class="w-5/6 h-3/4 m-auto mt-5 grid grid-cols-7">
-                <div class="w-10 h-10 rounded-full border-yellow-400 border-4 flex justify-center items-center">19</div>
-                <div class="w-10 h-10 rounded-full border-yellow-400 border-4 flex justify-center items-center">20</div>
-                <div class="w-10 h-10 rounded-full border-gray-400 border-4 flex justify-center items-center">21</div>
-                <div class="w-10 h-10 rounded-full border-gray-400 border-4 flex justify-center items-center">22</div>
-                <div class="w-10 h-10 rounded-full border-gray-400 border-4 flex justify-center items-center">23</div>
-                <div class="w-10 h-10 rounded-full border-gray-400 border-4 flex justify-center items-center">24</div>
-                <div class="w-10 h-10 rounded-full border-gray-400 border-4 flex justify-center items-center">25</div>
+                <div class="loginStreak w-10 h-10 rounded-full border-yellow-400 border-4 flex justify-center items-center"></div>
+                <div class="loginStreak w-10 h-10 rounded-full border-yellow-400 border-4 flex justify-center items-center"></div>
+                <div class="loginStreak w-10 h-10 rounded-full border-gray-400 border-4 flex justify-center items-center"></div>
+                <div class="loginStreak w-10 h-10 rounded-full border-gray-400 border-4 flex justify-center items-center"></div>
+                <div class="loginStreak w-10 h-10 rounded-full border-gray-400 border-4 flex justify-center items-center"></div>
+                <div class="loginStreak w-10 h-10 rounded-full border-gray-400 border-4 flex justify-center items-center"></div>
+                <div class="loginStreak w-10 h-10 rounded-full border-gray-400 border-4 flex justify-center items-center"></div>
             </div>
             <div class="text-slate-950 text-2xl font-semibold w-5/6 h-3/4 m-auto mt-10">
                 Calories Chart
@@ -31,28 +31,28 @@
             <div class= "text-gray-100 grid grid-cols-2 md:grid-cols-4 sm:grid-cols-3 w-5/6 mx-auto h-3/4 mt-10 pb-10 gap-5 text-sm font-semibold">
                 <div class="border rounded-md p-5 bg-blue-600">
                     <div class="flex flex-col shadow-sm gap-3 items-center">
-                        <img src="../../public/images/water.png">
+                        <img src="/images/water.png">
                         <p>Water Consumed: 3.5 &#8467;</p>
                         <p>Goal: 4 &#8467;</p>
                     </div>
                 </div>
                 <div class="border rounded-md shadow-sm p-5 bg-orange-500">
                     <div class="flex flex-col gap-3 items-center">
-                        <img src="../../public/images/burger.png">
+                        <img src="/images/burger.png">
                         <p>Calories Consumed: 1700 cal</p>
                         <p>Limit: 2000 cal</p>
                     </div>
                 </div>
                 <div class="border rounded-md shadow-sm p-5 bg-green-600">
                     <div class="flex flex-col gap-3 items-center">
-                        <img src="../../public/images/water.png">
+                        <img src="/images/gym.png">
                         <p>Calories Burned: 1800 cal</p>
                         <p>Goal: 2000 cal</p>
                     </div>
                 </div>
                 <div class="border rounded-md shadow-sm p-5 bg-gray-600">
                     <div class="flex flex-col gap-3 items-center">
-                        <img src="../../public/images/water.png">
+                        <img src="/images/sleep.png">
                         <p>Sleep: 7.5 hrs</p>
                         <p>Goal: 8 hrs</p>
                     </div>
@@ -98,4 +98,13 @@
           maintainAspectRatio: false
 		}
     })
+
+    window.onload = function addCurrentDaysInStreak() {
+        const streakElements = document.getElementsByClassName("loginStreak")
+        let current = new Date()
+        for(let i = 0; i < 7; i++){
+            streakElements[i].textContent = current.getDate() - current.getDay() + i
+        }
+        console.log(arr)
+    }
 </script>

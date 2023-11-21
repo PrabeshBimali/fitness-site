@@ -20,15 +20,15 @@
                 <div class="w-10 h-10 rounded-full border-gray-400 border-4 flex justify-center items-center">25</div>
             </div>
             <div class="text-slate-950 text-2xl font-semibold w-5/6 h-3/4 m-auto mt-10">
-                Today's Excercise Plan
+                Create Plan
             </div>
             <div class="w-5/6 m-auto h-3/4">
                 <div class="w-1/4 mt-5 h-40 border grid rounded-md">
                     <div class="bg-red-500 row-span-6 flex items-center justify-center font-bold text-white text-2xl">
-                        Beginner's Excercise
+                        Start Excercise
                     </div>
                     <div class=" bg-blue-500 row-span-2 font-bold text-white flex items-center justify-center cursor-pointer hover:bg-blue-700">
-                        Start Now
+                        <a href="/excercise/start">Start Now</a>
                     </div>
                 </div>
             </div>
@@ -58,39 +58,5 @@
 </body>
 
 <script>
-    let loginChart = document.getElementById("loginGraph").getContext('2d');
     
-    let chart = new Chart(loginChart, {
-        type: "line",
-        data : {
-			labels : [ "Feb 14", "Feb 15", "Feb 16", "Feb 17", "Feb 18", "Feb 19",
-					"Feb 20"],
-			datasets : [
-					{
-						data : [ 1400, 2000, 1500, 2013, 1200,
-								1700, 1800, 0 ],
-						label : "Calories Consumed",
-						borderColor : "#ED2939",
-						fill : false
-					},
-                    {
-						data : [ 1200, 2300, 1400, 1300, 1700,
-								1400, 2000, 0 ],
-						label : "Calories Burned",
-						borderColor : "#3cba9f",
-						fill : false
-					}
-                ]
-		},
-		options : {
-			title : {
-				display : true,
-				text : 'Chart JS Line Chart Example'
-			},
-            beziercurve: false,
-            responsive: true,
-          aspectRatio: 1,
-          maintainAspectRatio: false
-		}
-    })
 </script>

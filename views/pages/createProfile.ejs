@@ -1,0 +1,137 @@
+<%-include("../partials/header")-%>
+<body>
+    <section class="bg-gray-50 dark:bg-gray-900">
+        <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
+            <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+                <img class="w-8 h-8 mr-2" src="" alt="logo">
+                Live healthy    
+            </a>
+            <div class="w-full font-roboto bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+                <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                    <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                        Create Profile
+                    </h1>
+                    <form class="space-y-4 md:space-y-6" action="#">
+                        <div>
+                            <label for="age" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Age</label>
+                            <input type="number" name="age" id="age" min="13" max="130" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="21" required>
+                            <p class="text-red-600 pt-1 text-sm font-semibold username error"></p>
+                        </div>
+                        <div>
+                            <label for="height" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Height</label>
+                            <div class="flex gap-5 items-center">
+                                <input type="number" name="height" id="height" min="2" max="8" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="5" required>ft 
+                                <input type="number" name="inches" id="inches" min="0" max="11" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="9"> in
+                            </div>
+                            <p class="text-red-600 pt-1 text-sm font-semibold email error"></p>
+                        </div>
+                        <div>
+                            <label for="weight" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Weight</label>
+                            <div class="flex items-center gap-5">
+                                <input type="number" name="weight" id="weight" placeholder="65" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required> kg
+                            </div>
+                            <p class="text-red-600 pt-1 text-sm font-semibold password error"></p>
+                        </div>
+                        <div>
+                            <label for="gender" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gender</label>
+                            <div class="flex items-center gap-5">
+                                <select name="gender" id="gender" placeholder="65" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                                    <option value="">Please select one…</option>
+                                    <option class="py-3 text-base" value="female">Female</option>
+                                    <option class="py-3 text-base" value="male">Male</option>
+                                </select>
+                            </div>
+                            <p class="text-red-600 pt-1 text-sm font-semibold password error"></p>
+                        </div>
+                        <div>
+                            <label for="calorieLimit" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Calorie Intake Limit (optional)</label>
+                            <div class="flex items-center gap-5">
+                                <input type="number" name="calorieLimit" id="calorieLimit" step="any" placeholder="2000" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"> cal
+                            </div>
+                            <p class="text-red-600 pt-1 text-sm font-semibold password error"></p>
+                        </div>
+                        <div>
+                            <label for="calorieBurnGoal" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Calorie Burn Goal (from excercise) (optional)</label>
+                            <div class="flex items-center gap-5">
+                                <input type="number" name="calorieBurnGoal" step="any" id="calorieBurnGoal" placeholder="400" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"> cal
+                            </div>
+                            <p class="text-red-600 pt-1 text-sm font-semibold password error"></p>
+                        </div>
+                        <div>
+                            <label for="waterGoal" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Daily Water Intake Goal (optional)</label>
+                            <div class="flex items-center gap-5">
+                                <input type="number" name="waterGoal" step="0.5" id="waterGoal" placeholder="4" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"> &#8467;
+                            </div>
+                            <p class="text-red-600 pt-1 text-sm font-semibold password error"></p>
+                        </div>
+                        <div>
+                            <label for="sleepGoal" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sleep Goal (optional)</label>
+                            <div class="flex items-center gap-5">
+                                <input type="number" name="sleepGoal" id="sleepGoal" placeholder="8" min="0" max="24" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"> hrs
+                            </div>
+                            <p class="text-red-600 pt-1 text-sm font-semibold password error"></p>
+                        </div>
+                        <div>
+                            <label for="sleepTime" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sleep Time (for notification) (optional)</label>
+                            <div class="flex items-center gap-5">
+                                <input type="time" name="sleepTime" id="sleepTime" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            </div>
+                            <p class="text-red-600 pt-1 text-sm font-semibold password error"></p>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="ml-3 text-sm">
+                              <label for="terms" class="font-light text-gray-700 dark:text-gray-300">Optional fields can be filled later</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full text-white bg-yellow-600 hover:bg-yellow-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-3 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Create Your Profile</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+      </section>
+</body>
+<script>
+    const form = document.querySelector("form")
+    //const emailError = document.querySelector(".email.error")
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        //emailError.textContent = ""
+
+        const age = form.age.value
+        const height = form.height.value
+        const inches = form.inches.value
+        const weight = form.weight.value
+        const gender = form.gender.value
+        const calorieLimit = form.calorieLimit.value
+        const calorieBurnGoal = form.calorieBurnGoal.value
+        const waterGoal = form.waterGoal.value
+        const sleepGoal = form.sleepGoal.value
+        const sleepTime = form.sleepTime.value
+
+        console.log(age, height, inches, weight, gender, calorieLimit, calorieBurnGoal, waterGoal, sleepGoal, sleepTime)
+        try {
+            const res = await fetch('/profile', {
+                method: "POST",
+                body: JSON.stringify({
+                    age, height, inches, weight, gender, calorieLimit, calorieBurnGoal, waterGoal, sleepGoal, sleepTime
+                }),
+                headers: { 'Content-Type': 'application/json' }
+            })
+
+            const data = await res.json();
+            console.log(data)
+
+            if(res.ok) {
+                location.assign("/")
+            }else{
+                console.log("error")
+                //emailError.textContent = data.email
+            }
+
+        }catch(e) {
+            console.log(e)
+        }
+    })
+</script>

@@ -16,3 +16,23 @@ CREATE TABLE IF NOT EXISTS public.users
     CONSTRAINT username_unique UNIQUE (username),
 	CONSTRAINT email_unique UNIQUE (email)
 );
+
+Create table if not exists public.profile
+(
+    profileid serial,
+    userid integer not null,
+    age integer not null,
+    foot integer not null,
+    inches integer not null,
+    weight integer not null,
+    calorieburngoal integer,
+    calorielimit integer,
+    waterintakegoal float,
+    sleepgoal integer,
+    sleeptime time,
+    PRIMARY KEY(profileid),
+    CONSTRAINT  "users_profile_fk" foreign key (userid) 
+    references public.users(userid) 
+    on delete cascade
+)
+

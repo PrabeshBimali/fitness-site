@@ -1,0 +1,79 @@
+<%-include("../partials/header")-%>
+<body class="flex">
+    <%-include("../partials/sidebar")-%>
+    <div class="py-5 flex-auto">
+        <div class="flex justify-between">
+            <h1 class="text-2xl font-roboto ml-3 font-bold">Profile</h1>
+            <div class="px-8 cursor-pointer"><%=username %></div>
+        </div>
+        <div class="mt-5 ml-3">
+            <div class="text-slate-950 text-2xl font-semibold w-5/6 h-3/4 m-auto mt-10">
+                User Profile
+            </div>
+            <div class="w-5/6 h-3/4 m-auto mt-5">
+                <div class="grid grid-cols-2 mt-5">
+                    <p>Username:</p>
+                    <p>
+                        <span class="font-bold"><%=username %></span>
+                    </p>
+                </div>
+                <div class="grid grid-cols-2 mt-5">
+                    <p>Age:</p>
+                    <p>
+                        <span class="font-bold"><%=profile.age %></span>
+                    </p>
+                </div>
+                <div class="grid grid-cols-2 mt-5">
+                    <p>Height:</p>
+                    <p>
+                        <span class="font-bold"><%=profile.foot %>ft <%=profile.inches %>in</span>
+                    </p>
+                </div>
+                <div class="grid grid-cols-2 mt-5">
+                    <p>weight:</p>
+                    <p>
+                        <span class="font-bold"><%=profile.weight %></span>
+                    </p>
+                </div>
+                <div class="grid grid-cols-2 mt-5">
+                    <p>Calorie Burn Goal:</p>
+                    <p>
+                        <span class="font-bold"><%=profile.calorieburngoal %></span>
+                    </p>
+                </div>
+                <div class="grid grid-cols-2 mt-5">
+                    <p>Calorie Limit:</p>
+                    <p>
+                        <span class="font-bold"><%=profile.calorielimit %></span>
+                    </p>
+                </div>
+                <div class="grid grid-cols-2 mt-5">
+                    <p>Waater Intake Goal:</p>
+                    <p>
+                        <span class="font-bold"><%=profile.waterintakegoal %></span>
+                    </p>
+                </div>
+                <div class="grid grid-cols-2 mt-5">
+                    <p>Sleep Goal:</p>
+                    <p>
+                        <span class="font-bold"><%=profile.sleepgoal %></span>
+                    </p>
+                </div>
+                <div class="grid grid-cols-2 mt-5">
+                    <p>Sleep Time:</p>
+                    <p>
+                        <span class="font-bold"><%=profile.sleeptime %></span>
+                    </p>
+                </div>
+                <div class="grid grid-cols-2 mt-5">
+                    <button type="submit" class="w-full text-white bg-yellow-600 hover:bg-yellow-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-3 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Edit or Add missing features</button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</body>
+
+<script>
+    
+</script>
