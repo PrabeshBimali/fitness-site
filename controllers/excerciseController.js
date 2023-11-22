@@ -45,3 +45,19 @@ export async function store_tempreps(req, res) {
         res.status(500).json("Server error")
     }
 }
+
+export async function get_excerciseHistoryForGivenDate(req, res) {
+    try{
+
+        const {date} = req.query
+        const userid = req.userid
+
+        const data = await ex.findAllHistoryForADateByUserId(userid, date)
+
+        res.status(200).json(data)
+
+    }catch(e) {
+        console.log("Error when getting excercise history: ", e.messaage)
+        res.status(500).json("Server error")
+    }
+}

@@ -31,3 +31,20 @@ export async function validateExcerciseHistoryData(req, res, next) {
 
     next()
 }
+
+export async function transferExcerciseHistoryForTodayDate(req, res, next) {
+    try{
+
+        const {date} = req.cookies
+        const userid = req.userid
+
+        const data = await ex.findAllHistoryForADateByUserId(userid, date)
+
+        req.excerciseHistory = data
+        next()
+
+    }catch(e) {
+        console.log("Error when getting excercise history: ", e.messaage)
+        res.status(500).json("Server error")
+    }
+}

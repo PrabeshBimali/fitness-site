@@ -1,0 +1,1 @@
+select name, excercisetime, calorie, reps from excercises join excercisehistory on excercises.id = excercisehistory.exid and todaydate='2023-11-22' and userid=28

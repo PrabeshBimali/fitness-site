@@ -6,8 +6,8 @@ import { validateLogin, validateRegister, verifyAuth } from "./middlewares/authM
 import { login_post, logout_get, register_post } from "./controllers/authController.js"
 import { getUsername, passProfileData, validateProfile, verifyProfileCreated, verifyProfileNotCreated } from "./middlewares/profileMiddleware.js"
 import { profile_post, profile_put } from "./controllers/profileController.js"
-import { allExcercisesTransfer, excerciseDetailTransfer } from "./middlewares/excerciseMiddleware.js"
-import { excercisehistory_post, store_tempreps } from "./controllers/excerciseController.js"
+import { allExcercisesTransfer, excerciseDetailTransfer, transferExcerciseHistoryForTodayDate } from "./middlewares/excerciseMiddleware.js"
+import { excercisehistory_post, get_excerciseHistoryForGivenDate, store_tempreps } from "./controllers/excerciseController.js"
 import { quote_get } from "./controllers/quoteController.js"
 import { calorie_put, history_get, water_put } from "./controllers/dietaryController.js"
 import { sleep_put } from "./controllers/sleepController.js"
@@ -28,8 +28,8 @@ app.get("/excercise", verifyAuth, verifyProfileCreated, getUsername, passProfile
   return res.render('pages/excercise', {username: req.user.username, profile: req.profile});
 })
 
-app.get("/excercise/start", verifyAuth, verifyProfileCreated, getUsername, allExcercisesTransfer, (req, res) => {
-  return res.render("pages/todayexcercises", {username: req.user.username, excercises: req.excercises});
+app.get("/excercise/start", verifyAuth, verifyProfileCreated, getUsername, allExcercisesTransfer, transferExcerciseHistoryForTodayDate, (req, res) => {
+  return res.render("pages/todayexcercises", {username: req.user.username, excercises: req.excercises, excerciseHistory: req.excerciseHistory});
 })
 
 app.get("/excercise/:exid", verifyAuth, verifyProfileCreated, getUsername, excerciseDetailTransfer, passProfileData, (req, res) => {
@@ -39,6 +39,8 @@ app.get("/excercise/:exid", verifyAuth, verifyProfileCreated, getUsername, excer
 app.post("/excercisehistory", verifyAuth, verifyProfileCreated, excercisehistory_post)
 
 app.post("/excercisehistory/tempreps", verifyAuth, verifyProfileCreated, store_tempreps)
+
+app.get("/excercisehistory/date", verifyAuth, verifyProfileCreated, get_excerciseHistoryForGivenDate)
 
 app.get("/profile/create", verifyAuth, verifyProfileNotCreated, (req, res) => {
   return res.render('pages/createProfile')

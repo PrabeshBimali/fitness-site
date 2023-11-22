@@ -9,9 +9,17 @@ export async function getAllExcercises() {
 export async function findExcerciseById(id) {
     const query = `Select id, name, met, link, instructions from excercises where id = $1`
 
-    const ex = await await db.query(query, [id])
+    const ex = await db.query(query, [id])
 
     return ex.rows[0]
+}
+
+export async function findAllHistoryForADateByUserId(userid, date) {
+    const query = `select name, excercisetime, calorie, reps from excercises join excercisehistory on excercises.id = excercisehistory.exid and todaydate=$1 and userid=$2`
+
+    const ans = await db.query(query, [date, userid])
+
+    return ans.rows;
 }
 
 export async function createExcerciseHistory(userid, exid, historyid, calorieburned, excercisetime, date, reps) {

@@ -37,7 +37,42 @@
                 Today Excercise History
             </div>
             <div class="w-5/6 m-auto h-3/4">
-                <p id="test" class="text-2xl">Nothing to see here at the moment</p>
+                <table class="w-full text-sm text-left rtl:text-right text-gray-800 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">
+                                Excercise name
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Duration (in minutes)
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Repitions
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Calories Burned (cal)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for (var i = 0; i < excerciseHistory.length;  i++ ) { %>
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                <td class="px-6 py-4 text-black font-semibold">
+                                    <%= excerciseHistory[i].name %>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <%= excerciseHistory[i].excercisetime %>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <%= excerciseHistory[i].reps %>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <%= excerciseHistory[i].calorie %>
+                                </td>
+                        </tr>
+                        <% } %>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -84,4 +119,36 @@
             console.log(e.message)
         }
     })
+
+    async function getHistoryByDate(){
+        try{
+            const date = getTodayDate()
+            console.log(date)
+            
+            const res = await fetch(`/excercisehistory/date?date=${date}`, {
+                method: "GET",
+                headers: { 'Content-Type': 'application/json' }
+            })
+
+            const data = await res.json();
+
+            if(res.ok) {
+                console.log("ok")
+                // Fill Table
+                console.log(data)
+            }else{
+                console.log("error")
+                //emailError.textContent = data.email
+            }
+
+        }catch(e) {
+            console.log(e.message)
+        }
+    }
+
+    function fillTable(data){
+
+    }
+
+    //window.onload = getHistoryByDate
 </script>
