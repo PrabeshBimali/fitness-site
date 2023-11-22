@@ -101,14 +101,18 @@
                 ]
 		},
 		options : {
-			title : {
-				display : true,
-				text : 'Chart JS Line Chart Example'
-			},
-            beziercurve: false,
+			plugins:
+            {
+                title : {
+				    display : true,
+				    text : 'Chart JS Line Chart Example'
+			    }
+            },
+
+            beziercurve: true,
             responsive: true,
-          aspectRatio: 1,
-          maintainAspectRatio: false
+            aspectRatio: 1,
+            maintainAspectRatio: false
 		}
     })
 

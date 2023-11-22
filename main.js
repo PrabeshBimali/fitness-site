@@ -9,6 +9,7 @@ import { profile_post, profile_put } from "./controllers/profileController.js"
 import { allExcercisesTransfer, excerciseDetailTransfer } from "./middlewares/excerciseMiddleware.js"
 import { excercisehistory_post } from "./controllers/excerciseController.js"
 import { quote_get } from "./controllers/quoteController.js"
+import { calorie_put, history_get, water_put } from "./controllers/dietaryController.js"
 dotenv.config()
 const port = process.env.PORT
 
@@ -51,6 +52,16 @@ app.put("/profile", verifyAuth, verifyProfileCreated, validateProfile, profile_p
 app.get("/profile", verifyAuth, verifyProfileCreated, getUsername, passProfileData, (req, res) => {
   return res.render('pages/profile', {username: req.user.username, profile: req.profile});
 })
+
+app.get("/dietary", verifyAuth, verifyProfileCreated, getUsername, passProfileData, (req, res) => {
+  return res.render('pages/dietary', {username: req.user.username, profile: req.profile});
+})
+
+app.put("/dietary/calorie", verifyAuth, verifyProfileCreated, calorie_put)
+
+app.put("/dietary/water", verifyAuth, verifyProfileCreated, water_put)
+
+app.get("/history/single", verifyAuth, verifyProfileCreated, history_get)
 
 app.get("/quote", quote_get)
 
