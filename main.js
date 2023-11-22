@@ -10,6 +10,7 @@ import { allExcercisesTransfer, excerciseDetailTransfer } from "./middlewares/ex
 import { excercisehistory_post, store_tempreps } from "./controllers/excerciseController.js"
 import { quote_get } from "./controllers/quoteController.js"
 import { calorie_put, history_get, water_put } from "./controllers/dietaryController.js"
+import { sleep_put } from "./controllers/sleepController.js"
 dotenv.config()
 const port = process.env.PORT
 
@@ -66,6 +67,8 @@ app.put("/dietary/water", verifyAuth, verifyProfileCreated, water_put)
 app.get("/sleep", verifyAuth, verifyProfileCreated, getUsername, passProfileData, (req, res) => {
   return res.render('pages/sleep', {username: req.user.username, profile: req.profile});
 })
+
+app.put("/sleep", verifyAuth, verifyProfileCreated, sleep_put)
 
 app.get("/history/single", verifyAuth, verifyProfileCreated, history_get)
 

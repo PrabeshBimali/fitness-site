@@ -8,57 +8,75 @@
     </div>
     <div class="mt-5 ml-3">
       <div
-        class="text-slate-950 text-2xl font-semibold w-5/6 h-3/4 m-auto mt-10 grid md:grid-cols-2"
+        class="text-slate-950 text-2xl font-semibold w-5/6 h-3/4 m-auto mt-10"
+      >
+        Today's Progress
+      </div>
+      <div
+        class="text-slate-950 text-2xl font-semibold w-5/6 h-3/4 m-auto mt-10 grid"
       >
         <div>
           <div>
-            <canvas id="dietChart"> </canvas>
+            <canvas id="dailyChart"> </canvas>
           </div>
-          <p id="dietInfo" class="text-center text-base">Calories Remaining</p>
+          <p id="dailyInfo" class="text-center text-base"></p>
           <form
-            id="calForm"
+            id="hrsForm"
             class="flex justify-center gap-3 items-center mt-4"
           >
-            <label class="text-sm">Add Calories: </label>
+            <label class="text-sm">Update hours: </label>
             <input
-              name="calories"
-              placeholder="in calories"
+              name="hours"
+              placeholder="in hrs"
               class="border-2 px-2 text-sm focus:ring-blue-600 focus:border-blue-600"
               name=""
               type="number"
               min="1"
-              max="10000"
+              max="24"
               required
             />
-            <span class="text-base">cal</span>
+            <span class="text-base">hrs</span>
             <button
-              id="addCal"
+              id="updateHrs"
               class="text-xs border-2 font-bold px-3 py-1 border-none active:border-none focus:border-none hover:bg-blue-600 rounded-md bg-blue-500 text-white"
             >
-              Add
+              update
             </button>
           </form>
           <p class="text-xs mt-0 text-neutral-700 text-center">
-            This value will be added on top of previous calorie intake for the day
+            Sleep hours will not be added to previous data. It will be updated!
           </p>
         </div>
+      </div>
+      <div
+        class="text-slate-950 text-2xl font-semibold w-5/6 h-3/4 m-auto mt-10"
+      >
+        Excercise Now!
+      </div>
+      <div class="w-5/6 m-auto h-3/4 pb-5">
+        <div class="w-1/4 mt-5 h-40 border grid rounded-md">
+          <div
+            class="bg-red-500 row-span-6 flex items-center justify-center font-bold text-white text-2xl"
+          >
+            Start Excercise
+          </div>
+          <a
+            class="bg-blue-500 row-span-2 font-bold text-white flex items-center justify-center cursor-pointer hover:bg-blue-700"
+            href="/excercise/start"
+          >
+            Start Now</a
+          >
+        </div>
+      </div>
     </div>
   </div>
 </body>
 
 <script>
-  const dietChart = document.getElementById("dietChart");
-  const waterChart = document.getElementById("waterChart");
-  const calForm = document.getElementById("calForm");
-  const waterForm = document.getElementById("waterForm");
-  const addWaterBtn = document.getElementById("addWater");
-  const addCalBtn = document.getElementById("addCal");
-  const dietInfo = document.getElementById("dietInfo")
-  const waterInfo = document.getElementById("waterInfo")
-
-  const waterGoal = parseFloat("<%= profile.waterintakegoal %>")
-  const calorieGoal = parseInt("<%= profile.calorielimit %>")
-
+  const dailyChart = document.getElementById("dailyChart");
+  const dailyInfo = document.getElementById("dailyInfo");
+  const sleepGoal = parseInt("<%= profile.sleepgoal %>");
+  const hrsForm = document.getElementById("hrsForm")
 
   function getTodayDate() {
     let currentDate = new Date();
@@ -67,29 +85,22 @@
     return currentDate.toISOString().split("T")[0];
   }
 
-  function updateInfos(diet, water){
-    const remainWater = waterGoal - water
-    const remainDiet = calorieGoal - diet
+  function updateInfo(sleep) {
+    const remainGoal = sleepGoal - sleep;
 
-    if(remainDiet <= 0) {
-        dietInfo.textContent = "You have reached calorie Limit!"
-    }else{
-        dietInfo.textContent = remainDiet + " Calories Remaining"
-    }
-
-    if(remainWater <= 0) {
-        waterInfo.textContent = "Water Goal reached"
-    }else{
-        waterInfo.textContent = remainWater + " Liters to go!"
+    if (remainGoal <= 0) {
+      dailyInfo.textContent = "You did not reach your sleeping goal";
+    } else {
+      dailyInfo.textContent = "You reached your sleeping goal!";
     }
   }
 
-  function chartOptions(label) {
+  function chartOptions() {
     const options = {
       plugins: {
         title: {
           display: true,
-          text: label,
+          text: "Hours slept",
         },
       },
       beziercurve: true,
@@ -101,60 +112,43 @@
     return options;
   }
 
-  function createWaterGraph(waterConsumed) {
-    new Chart(waterChart, {
-        type: "doughnut",
-        data: {
-          labels: ["Remaining", "Water Consumed"],
-    
-          datasets: [
-            {
-              label: "Daily Water Consumed",
-    
-              data: [(waterGoal - waterConsumed < 0) ? 0 : (waterGoal-waterConsumed), waterConsumed],
-    
-              backgroundColor: ["rgb(255, 99, 132)", "rgb(54, 162, 235)"],
-    
-              hoverOffset: 4,
-            },
-          ],
-        },
-        options: chartOptions("Water Consumed"),
-      });
+  function createSleepGraph(sleepHrs) {
+    new Chart(dailyChart, {
+      type: "doughnut",
+      data: {
+        labels: ["Goal", "Hours Slept"],
+
+        datasets: [
+          {
+            label: "Hours slept",
+
+            data: [
+              sleepGoal - sleepHrs < 0
+                ? 0
+                : sleepGoal - sleepHrs,
+                sleepHrs,
+            ],
+
+            backgroundColor: ["rgb(255, 99, 132)", "rgb(119, 115, 172)"],
+
+            hoverOffset: 4,
+          },
+        ],
+      },
+      options: chartOptions(),
+    });
   }
 
-  function createCalorieGraph(calorieConsumed) {
-    new Chart(dietChart, {
-        type: "doughnut",
-        data: {
-          labels: ["Remaining", "Calories Consumed"],
-    
-          datasets: [
-            {
-              label: "Daily Calories consumed",
-    
-              data: [(calorieGoal - calorieConsumed < 0) ? 0 : (calorieGoal-calorieConsumed), calorieConsumed],
-    
-              backgroundColor: ["rgb(255, 99, 132)", "rgb(255, 205, 86)"],
-    
-              hoverOffset: 4,
-            },
-          ],
-        },
-        options: chartOptions("Calories Consumed"),
-      });
-  }
-
-  calForm.addEventListener("submit", async (e) => {
+  hrsForm.addEventListener("submit", async (e) => {
     e.preventDefault()
     try {
       const date = getTodayDate();
-      const caloriesConsumed = calForm.calories.value
+      const hrsSlept = hrsForm.hours.value
 
-      const res = await fetch("/dietary/calorie", {
+      const res = await fetch("/sleep", {
         method: "PUT",
         body: JSON.stringify({
-            date, caloriesConsumed
+            date, hrsSlept
         }),
         headers: { "Content-Type": "application/json" },
       });
@@ -163,8 +157,8 @@
       console.log(data);
 
       if (res.ok) {
-        updateInfos(data.calorieconsumed, data.waterintake)
-        calForm.calories.value = ""
+        updateInfo(data.sleep);
+        hrsForm.hours.value = ""
       } else {
         console.log("error");
         //emailError.textContent = data.email
@@ -174,17 +168,12 @@
     }
   });
 
-  waterForm.addEventListener("submit", async (e) => {
-    e.preventDefault()
+  async function getHistory() {
     try {
       const date = getTodayDate();
-      const waterConsumed = waterForm.water.value
 
-      const res = await fetch("/dietary/water", {
-        method: "PUT",
-        body: JSON.stringify({
-            date, waterConsumed
-        }),
+      const res = await fetch(`/history/single?date=${date}`, {
+        method: "GET",
         headers: { "Content-Type": "application/json" },
       });
 
@@ -192,8 +181,8 @@
       console.log(data);
 
       if (res.ok) {
-        updateInfos(data.calorieconsumed, data.waterintake)
-        waterForm.water.value = ""
+        createSleepGraph(data.sleep);
+        updateInfo(data.sleep);
       } else {
         console.log("error");
         //emailError.textContent = data.email
@@ -201,32 +190,6 @@
     } catch (e) {
       console.log(e.message);
     }
-  })
-
-  async function getHistory() {
-    try {
-        const date = getTodayDate();
-        const caloriesConsumed = calForm.calories.value
-  
-        const res = await fetch(`/history/single?date=${date}`, {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        });
-  
-        const data = await res.json();
-        console.log(data);
-  
-        if (res.ok) {
-          createWaterGraph(data.waterintake)
-          createCalorieGraph(data.calorieconsumed)
-          updateInfos(data.calorieconsumed, data.waterintake)
-        } else {
-          console.log("error");
-          //emailError.textContent = data.email
-        }
-      } catch (e) {
-        console.log(e.message);
-      }
   }
 
   window.onload = getHistory;

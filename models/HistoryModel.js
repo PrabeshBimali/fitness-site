@@ -30,6 +30,12 @@ export async function updateWaterConsumed(historyid, newWaterValue) {
     await db.query(query, [newWaterValue, historyid])
 }
 
+export async function updateSleepHours(historyid, sleepHrs) {
+    const query = `UPDATE dailyhistory set sleep = $1 where historyid = $2`
+
+    await db.query(query, [sleepHrs, historyid])
+}
+
 export async function updateTempReps(userid, date, tempreps) {
     const query = `UPDATE dailyhistory set tempreps = $1 where userid = $2 and historydate = $3`
     console.log(tempreps, date, userid)
