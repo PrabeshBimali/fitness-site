@@ -30,6 +30,13 @@ export async function updateWaterConsumed(historyid, newWaterValue) {
     await db.query(query, [newWaterValue, historyid])
 }
 
+export async function updateTempReps(userid, date, tempreps) {
+    const query = `UPDATE dailyhistory set tempreps = $1 where userid = $2 and historydate = $3`
+    console.log(tempreps, date, userid)
+
+    await db.query(query, [tempreps, userid, date])
+}
+
 export async function create(userid, date) {
     const query = `Insert into dailyhistory(userid, historydate) values($1, $2)`
 

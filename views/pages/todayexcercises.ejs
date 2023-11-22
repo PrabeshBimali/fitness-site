@@ -7,31 +7,81 @@
             <div class="px-8 cursor-pointer"><%=username %></div>
         </div>
             <div class="text-slate-950 text-2xl font-semibold w-5/6 h-3/4 m-auto mt-10">
-                Today's Progress
-            </div>
-            <div class="w-5/6 m-auto h-3/4">
-                <p class="text-2xl">Bar chart here!</p>
-            </div>
-            <div class="text-slate-950 text-2xl font-semibold w-5/6 h-3/4 m-auto mt-10">
                 Choose An Excercise
             </div>
-            <% for (var i = 0; i < excercises.length;  i++ ) { %>
-                <div class="w-5/6 m-auto h-3/4">
-                    <div class="bg-red-500 w-1/2 mt-5 flex items-center justify-center font-bold text-white text-2xl hover:bg-red-600">
-                        <a class="w-full h-full py-5 text-center" href="\excercise\<%=excercises[0].id %>"><%= excercises[0].name%></a>
-                    </div>
+            <form class="w-1/2 m-auto h-3/4 mt-5 flex flex-col gap-5">
+                <div class="mt-3">
+                <label for="excercise" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gender</label>
+                <div class="flex items-center gap-5">
+                    <select name="excercise" id="gender" placeholder="65" class="bg-gray-50 border border-black text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                        <option value="">Please select one…</option>
+                        <% for (var i = 0; i < excercises.length;  i++ ) { %>
+                            <option class="py-3 text-base" value=<%= excercises[i].id %>><%= excercises[i].name %></option>
+                        <% } %>
+                    </select>
                 </div>
-            <% } %>
+                <div class="mt-3">
+                    <label for="reps" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Calorie Intake Limit</label>
+                    <div class="flex items-center gap-5">
+                        <input type="number" name="reps" min="1" max="500" id="calorieLimit" placeholder="10" class="bg-gray-50 border border-black text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required> reps
+                    </div>
+                    <p class="text-red-600 pt-1 text-sm font-semibold password error"></p>
+                </div>
+            </div>
+            <div class="mt-3">
+                <button type="submit" class="w-full text-white bg-yellow-600 hover:bg-yellow-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-3 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Start</button>
+            </div>
+            </form>
+            <p class="text-center">You can start excercise multiple times for sets</p>
             <div class="text-slate-950 text-2xl font-semibold w-5/6 h-3/4 m-auto mt-10">
                 Today Excercise History
             </div>
             <div class="w-5/6 m-auto h-3/4">
-                <p class="text-2xl">Nothing to see here at the moment</p>
+                <p id="test" class="text-2xl">Nothing to see here at the moment</p>
             </div>
         </div>
     </div>
 </body>
 
 <script>
-    
+    const form = document.querySelector("form")
+    function getTodayDate() {
+        let currentDate = new Date()
+        const offset = currentDate.getTimezoneOffset()
+        currentDate = new Date(currentDate.getTime() - (offset*60*1000))
+        return currentDate.toISOString().split('T')[0]
+    }
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault()
+
+        const id = form.excercise.value
+        const reps = form.reps.value
+
+        try{
+            const date = getTodayDate()
+            console.log(date)
+            
+            const res = await fetch('/excercisehistory/tempreps', {
+                method: "POST",
+                body: JSON.stringify({
+                    date, reps
+                }),
+                headers: { 'Content-Type': 'application/json' }
+            })
+
+            const data = await res.json();
+
+            if(res.ok) {
+                console.log("ok")
+                location.assign(`/excercise/${id}`)
+            }else{
+                console.log("error")
+                //emailError.textContent = data.email
+            }
+
+        }catch(e) {
+            console.log(e.message)
+        }
+    })
 </script>

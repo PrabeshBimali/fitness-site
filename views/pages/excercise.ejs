@@ -1,62 +1,143 @@
 <%-include("../partials/header")-%>
 <body class="flex">
-    <%-include("../partials/sidebar")-%>
-    <div class="py-5 flex-auto">
-        <div class="flex justify-between">
-            <h1 class="text-2xl font-roboto ml-3 font-bold">Excercise</h1>
-            <div class="px-8 cursor-pointer"><%=username %></div>
-        </div>
-        <div class="mt-5 ml-3">
-            <div class="text-slate-950 text-2xl font-semibold w-5/6 h-3/4 m-auto mt-10">
-                Weekly Streak
-            </div>
-            <div class="w-5/6 h-3/4 m-auto mt-5 grid grid-cols-7">
-                <div class="w-10 h-10 rounded-full border-yellow-400 border-4 flex justify-center items-center">19</div>
-                <div class="w-10 h-10 rounded-full border-yellow-400 border-4 flex justify-center items-center">20</div>
-                <div class="w-10 h-10 rounded-full border-gray-400 border-4 flex justify-center items-center">21</div>
-                <div class="w-10 h-10 rounded-full border-gray-400 border-4 flex justify-center items-center">22</div>
-                <div class="w-10 h-10 rounded-full border-gray-400 border-4 flex justify-center items-center">23</div>
-                <div class="w-10 h-10 rounded-full border-gray-400 border-4 flex justify-center items-center">24</div>
-                <div class="w-10 h-10 rounded-full border-gray-400 border-4 flex justify-center items-center">25</div>
-            </div>
-            <div class="text-slate-950 text-2xl font-semibold w-5/6 h-3/4 m-auto mt-10">
-                Create Plan
-            </div>
-            <div class="w-5/6 m-auto h-3/4">
-                <div class="w-1/4 mt-5 h-40 border grid rounded-md">
-                    <div class="bg-red-500 row-span-6 flex items-center justify-center font-bold text-white text-2xl">
-                        Start Excercise
-                    </div>
-                    <div class=" bg-blue-500 row-span-2 font-bold text-white flex items-center justify-center cursor-pointer hover:bg-blue-700">
-                        <a href="/excercise/start">Start Now</a>
-                    </div>
-                </div>
-            </div>
-            <div class="text-slate-950 text-2xl font-semibold w-5/6 h-3/4 m-auto mt-10">
-                Daily Challenges
-            </div>
-            <div class="w-5/6 m-auto h-3/4 flex gap-5">
-                <div class="w-1/4 mt-5 h-40 border grid rounded-md">
-                    <div class="bg-gradient-to-r from-orange-600 to-red-500 row-span-6 flex items-center justify-center font-bold text-white text-2xl">
-                        Plank Challenge
-                    </div>
-                    <div class=" bg-blue-500 row-span-2 font-bold text-white flex items-center justify-center cursor-pointer hover:bg-blue-700">
-                        Start Now
-                    </div>
-                </div>
-                <div class="w-1/4 mt-5 h-40 border grid rounded-md">
-                    <div class="bg-gradient-to-r from-orange-600 to-red-500 row-span-6 flex items-center justify-center font-bold text-white text-2xl">
-                        Push up Challenge
-                    </div>
-                    <div class=" bg-blue-500 row-span-2 font-bold text-white flex items-center justify-center cursor-pointer hover:bg-blue-700">
-                        Start Now
-                    </div>
-                </div>
-            </div>
-        </div>
+  <%-include("../partials/sidebar")-%>
+  <div class="py-5 flex-auto">
+    <div class="flex justify-between">
+      <h1 class="text-2xl font-roboto ml-3 font-bold">Excercise</h1>
+      <div class="px-8 cursor-pointer"><%=username %></div>
     </div>
+    <div class="mt-5 ml-3">
+      <div
+        class="text-slate-950 text-2xl font-semibold w-5/6 h-3/4 m-auto mt-10"
+      >
+        Today's Progress
+      </div>
+      <div
+        class="text-slate-950 text-2xl font-semibold w-5/6 h-3/4 m-auto mt-10 grid"
+      >
+        <div>
+          <div>
+            <canvas id="dailyChart"> </canvas>
+          </div>
+          <p id="dailyInfo" class="text-center text-base">more to go!</p>
+          <p class="text-xs mt-0 text-neutral-700 text-center">
+            Calories you burn doing excercises will be added automatically!
+          </p>
+        </div>
+      </div>
+      <div
+        class="text-slate-950 text-2xl font-semibold w-5/6 h-3/4 m-auto mt-10"
+      >
+        Excercise Now!
+      </div>
+      <div class="w-5/6 m-auto h-3/4 pb-5">
+        <div class="w-1/4 mt-5 h-40 border grid rounded-md">
+          <div
+            class="bg-red-500 row-span-6 flex items-center justify-center font-bold text-white text-2xl"
+          >
+            Start Excercise
+          </div>
+          <a
+            class="bg-blue-500 row-span-2 font-bold text-white flex items-center justify-center cursor-pointer hover:bg-blue-700"
+            href="/excercise/start"
+          >
+            Start Now</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 
 <script>
-    
+  const dailyChart = document.getElementById("dailyChart");
+  const dailyInfo = document.getElementById("dailyInfo");
+  const calorieBurnGoal = parseInt("<%= profile.calorieburngoal %>");
+
+  function getTodayDate() {
+    let currentDate = new Date();
+    const offset = currentDate.getTimezoneOffset();
+    currentDate = new Date(currentDate.getTime() - offset * 60 * 1000);
+    return currentDate.toISOString().split("T")[0];
+  }
+
+  function updateInfo(calorie) {
+    const remainGoal = calorieBurnGoal - calorie;
+
+    if (remainGoal <= 0) {
+      dailyInfo.textContent = "Goal reached. Keep it up!";
+    } else {
+      dailyInfo.textContent = remainGoal + " Calories to burn";
+    }
+  }
+
+  function chartOptions() {
+    const options = {
+      plugins: {
+        title: {
+          display: true,
+          text: "Daily Calorie Burned from Excercise",
+        },
+      },
+      beziercurve: true,
+      responsive: true,
+      aspectRatio: 1,
+      maintainAspectRatio: false,
+    };
+
+    return options;
+  }
+
+  function createCalorieGraph(calorieBurned) {
+    new Chart(dailyChart, {
+      type: "doughnut",
+      data: {
+        labels: ["Remaining", "Calories Burned Today"],
+
+        datasets: [
+          {
+            label: "Daily Calories consumed",
+
+            data: [
+              calorieBurnGoal - calorieBurned < 0
+                ? 0
+                : calorieBurnGoal - calorieBurned,
+              calorieBurned,
+            ],
+
+            backgroundColor: ["rgb(255, 99, 132)", "rgb(255, 205, 86)"],
+
+            hoverOffset: 4,
+          },
+        ],
+      },
+      options: chartOptions("Calories Burned Today"),
+    });
+  }
+
+  async function getHistory() {
+    try {
+      const date = getTodayDate();
+
+      const res = await fetch(`/history/single?date=${date}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const data = await res.json();
+      console.log(data);
+
+      if (res.ok) {
+        createCalorieGraph(data.caloriesburned);
+        updateInfo(data.caloriesburned);
+      } else {
+        console.log("error");
+        //emailError.textContent = data.email
+      }
+    } catch (e) {
+      console.log(e.message);
+    }
+  }
+
+  window.onload = getHistory;
 </script>

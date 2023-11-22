@@ -81,19 +81,21 @@
         e.preventDefault();
         clearInterval(interval)
         calorieText.innerText = calculateCaloriesBurnt()
-        stopBtn.remove()
         finalMsg.classList.remove("hide")
         goBack.classList.remove("hide")
+        stopBtn.remove()
+        console.log("test")
 
         try{
             const date = getTodayDate()
             const calorieBurnt = calculateCaloriesBurnt()
             const time = getTotalMinute()
+            console.log(time)
             
             const res = await fetch('/excercisehistory', {
                 method: "POST",
                 body: JSON.stringify({
-                    date, caloriesBurnt, time, exid: '<%= excercise.id  %>'
+                    date, calorieBurnt, time, exid: '<%= excercise.id  %>'
                 }),
                 headers: { 'Content-Type': 'application/json' }
             })
@@ -108,7 +110,7 @@
             }
 
         }catch(e) {
-
+            console.log(e.message)
         }
     })
 

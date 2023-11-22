@@ -7,7 +7,7 @@ import { login_post, logout_get, register_post } from "./controllers/authControl
 import { getUsername, passProfileData, validateProfile, verifyProfileCreated, verifyProfileNotCreated } from "./middlewares/profileMiddleware.js"
 import { profile_post, profile_put } from "./controllers/profileController.js"
 import { allExcercisesTransfer, excerciseDetailTransfer } from "./middlewares/excerciseMiddleware.js"
-import { excercisehistory_post } from "./controllers/excerciseController.js"
+import { excercisehistory_post, store_tempreps } from "./controllers/excerciseController.js"
 import { quote_get } from "./controllers/quoteController.js"
 import { calorie_put, history_get, water_put } from "./controllers/dietaryController.js"
 dotenv.config()
@@ -19,12 +19,12 @@ app.use(cookieParser())
 app.set("view engine", "ejs");
 
 
-app.get("/", verifyAuth, verifyProfileCreated, getUsername, (req, res) => {
-  return res.render('pages/dashboard', {username: req.user.username});
+app.get("/", verifyAuth, verifyProfileCreated, getUsername, passProfileData, (req, res) => {
+  return res.render('pages/dashboard', {username: req.user.username, profile: req.profile});
 })
 
-app.get("/excercise", verifyAuth, verifyProfileCreated, getUsername, (req, res) => {
-  return res.render('pages/excercise', {username: req.user.username});
+app.get("/excercise", verifyAuth, verifyProfileCreated, getUsername, passProfileData, (req, res) => {
+  return res.render('pages/excercise', {username: req.user.username, profile: req.profile});
 })
 
 app.get("/excercise/start", verifyAuth, verifyProfileCreated, getUsername, allExcercisesTransfer, (req, res) => {
@@ -36,6 +36,8 @@ app.get("/excercise/:exid", verifyAuth, verifyProfileCreated, getUsername, excer
 })
 
 app.post("/excercisehistory", verifyAuth, verifyProfileCreated, excercisehistory_post)
+
+app.post("/excercisehistory/tempreps", verifyAuth, verifyProfileCreated, store_tempreps)
 
 app.get("/profile/create", verifyAuth, verifyProfileNotCreated, (req, res) => {
   return res.render('pages/createProfile')
@@ -60,6 +62,10 @@ app.get("/dietary", verifyAuth, verifyProfileCreated, getUsername, passProfileDa
 app.put("/dietary/calorie", verifyAuth, verifyProfileCreated, calorie_put)
 
 app.put("/dietary/water", verifyAuth, verifyProfileCreated, water_put)
+
+app.get("/sleep", verifyAuth, verifyProfileCreated, getUsername, passProfileData, (req, res) => {
+  return res.render('pages/sleep', {username: req.user.username, profile: req.profile});
+})
 
 app.get("/history/single", verifyAuth, verifyProfileCreated, history_get)
 
