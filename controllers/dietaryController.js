@@ -45,7 +45,7 @@ export async function water_put(req, res) {
             await history.create(userid, date)
             historyData = await history.findByUseridAndDate(userid, date)
             const newWater = historyData.waterintake + req.body.waterConsumed
-            await history.updateCaloriesConsumed(historyData.historyid, newWater)
+            await history.updateWaterConsumed(historyData.historyid, newWater)
         }   
 
         historyData = await history.findByUseridAndDate(userid, date)
@@ -63,6 +63,12 @@ export async function history_get(req, res) {
         const {date} = req.query
         const userid = req.userid
         let historyData = await history.findByUseridAndDate(userid, date)
+
+        if(!historyData) {
+            await history.create(userid, date)
+            historyData = await history.findByUseridAndDate(userid, date)
+        }
+
         res.status(200).json(historyData)
 
     }catch(e){
