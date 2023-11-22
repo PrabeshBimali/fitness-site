@@ -13,3 +13,10 @@ export async function findExcerciseById(id) {
 
     return ex.rows[0]
 }
+
+export async function createExcerciseHistory(userid, exid, historyid, calorieburned, excercisetime, date) {
+    const query = `Insert into excerciseHistory(userid, exid, historyid, calorie, excercisetime, todaydate) 
+                    values ($1, $2, $3, $4, $5)`
+
+    await db.query(query, [userid, exid, historyid, calorieburned, excercisetime, date])
+}

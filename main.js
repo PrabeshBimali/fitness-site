@@ -7,6 +7,8 @@ import { login_post, logout_get, register_post } from "./controllers/authControl
 import { getUsername, passProfileData, validateProfile, verifyProfileCreated, verifyProfileNotCreated } from "./middlewares/profileMiddleware.js"
 import { profile_post, profile_put } from "./controllers/profileController.js"
 import { allExcercisesTransfer, excerciseDetailTransfer } from "./middlewares/excerciseMiddleware.js"
+import { excercisehistory_post } from "./controllers/excerciseController.js"
+import { quote_get } from "./controllers/quoteController.js"
 dotenv.config()
 const port = process.env.PORT
 
@@ -32,6 +34,8 @@ app.get("/excercise/:exid", verifyAuth, verifyProfileCreated, getUsername, excer
   return res.render('pages/excerciseinstruction', {username: req.user.username, excercise: req.excercise, profile: req.profile});
 })
 
+app.post("/excercisehistory", verifyAuth, verifyProfileCreated, excercisehistory_post)
+
 app.get("/profile/create", verifyAuth, verifyProfileNotCreated, (req, res) => {
   return res.render('pages/createProfile')
 })
@@ -47,6 +51,8 @@ app.put("/profile", verifyAuth, verifyProfileCreated, validateProfile, profile_p
 app.get("/profile", verifyAuth, verifyProfileCreated, getUsername, passProfileData, (req, res) => {
   return res.render('pages/profile', {username: req.user.username, profile: req.profile});
 })
+
+app.get("/quote", quote_get)
 
 app.get("/register", (req, res) => {
   return res.render('pages/register');

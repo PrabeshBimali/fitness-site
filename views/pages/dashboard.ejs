@@ -20,6 +20,17 @@
                 <div class="loginStreak w-10 h-10 rounded-full border-gray-400 border-4 flex justify-center items-center"></div>
             </div>
             <div class="text-slate-950 text-2xl font-semibold w-5/6 h-3/4 m-auto mt-10">
+                Keep up the Work!
+            </div>
+            <div class="w-5/6 h-40 m-auto mt-5 rounded-md border-2 p-3 shadow-md">
+                <div class="w-3/4 h-full mx-auto flex flex-col justify-center gap-2">
+                    <blockquote class="text-xl h-3/4 italic font-semibold text-gray-900 dark:text-white">
+                        <p id="motivation" class="text-lg">Motivational quote</p>
+                    </blockquote>
+                    <p id="author" class="flex w-full justify-end text-zinc-600 col-span-1" >- author</p>
+                </div>
+            </div>
+            <div class="text-slate-950 text-2xl font-semibold w-5/6 h-3/4 m-auto mt-10">
                 Calories Chart
             </div>
             <div class="w-5/6 m-auto h-3/4">
@@ -64,6 +75,8 @@
 
 <script>
     let loginChart = document.getElementById("loginGraph").getContext('2d');
+    let motivation = document.getElementById("motivation")
+    let author = document.getElementById("author")
     
     let chart = new Chart(loginChart, {
         type: "line",
@@ -99,12 +112,40 @@
 		}
     })
 
+    async function getQuote(){
+        try {
+            const res = await fetch('/quote', {
+                method: "GET",
+                headers: { 'Content-Type': 'application/json' }
+            })
+
+            const data = await res.json();
+            console.log(data)
+
+            if(res.ok) {
+                motivation.textContent = data.quote;
+                author.textContent = "- " + data.author;
+            }else{
+                console.log("error")
+                //emailError.textContent = data.email
+            }
+
+        }catch(e) {
+            console.log(e)
+        }
+    }
+
     window.onload = function addCurrentDaysInStreak() {
         const streakElements = document.getElementsByClassName("loginStreak")
         let current = new Date()
         for(let i = 0; i < 7; i++){
             streakElements[i].textContent = current.getDate() - current.getDay() + i
         }
-        console.log(arr)
+
+        getQuote()
     }
+
+
+    window.setInterval(getQuote, 10000)
+    
 </script>

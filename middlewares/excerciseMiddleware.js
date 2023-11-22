@@ -15,10 +15,19 @@ export async function excerciseDetailTransfer(req, res, next) {
     try {
         const excercise = await ex.findExcerciseById(req.params.exid);
         req.excercise = excercise
-        console.log(excercise)
         next()
     }catch(e){
         console.log(e.message)
         res.status(500).json("Server error")
     }
+}
+
+export async function validateExcerciseHistoryData(req, res, next) {
+    const { time, exid, caloriesBurnt } = req.body;
+
+    req.body.exid = parseInt(exid)
+    req.body.caloriesBurnt = parseFloat(caloriesBurnt)
+    req.body.time = parseFloat(time)
+
+    next()
 }

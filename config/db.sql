@@ -36,3 +36,36 @@ Create table if not exists public.profile
     on delete cascade
 )
 
+create table public.dailyhistory
+(
+    historyid serial,
+    userid integer not null,
+    caloriesburned float not null default 0,
+    calorieconsumed integer not null default 0,
+    sleep float not null default 0,
+    waterintake float not null default 0,
+    historydate date NOT NULL,
+    PRIMARY KEY(historyid),
+    CONSTRAINT "users_history_fk" foreign key (userid) 
+    references public.users(userid)
+    on delete cascade
+)
+
+create table public.excerciseHistory
+(
+    id serial,
+    userid integer not null,
+    exid integer not null,
+    historyid integer not null,
+    calorie float not null,
+    excercisetime float not null,
+    PRIMARY key(id),
+    todaydate date Not Null,
+    CONSTRAINT "users_excerciseHistory_fk" foreign key (userid) 
+    references public.users(userid) on delete cascade,
+    CONSTRAINT "excercise_excerciseHistory_fk" foreign key (exid) 
+    references public.excercises(id) on delete cascade,
+    CONSTRAINT "history_excerciseHistory_fk" foreign key (historyid) 
+    references public.dailyhistory(historyid) on delete cascade
+)
+
